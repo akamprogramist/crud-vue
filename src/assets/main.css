@@ -1,0 +1,27 @@
+.links {
+  margin: 50px;
+}
+.link {
+  margin: 50px;
+  font-size: 30px;
+}
+.cats {
+  margin: 80px;
+}
+.cat {
+  margin: 50px;
+  font-size: 20px;
+}
+.items {
+  width: 400px;
+  border: 1px solid burlywood;
+}
+.title {
+  font-size: 20px;
+}
+div {
+  margin: 30px;
+}
+input {
+  margin-left: 30px;
+}
