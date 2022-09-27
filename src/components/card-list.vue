@@ -1,14 +1,7 @@
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, } from "vue";
 const items = ref([]);
 const changeItem = ref(false);
-watch(
-  items,
-  (newVal) => {
-    localStorage.setItem("items", JSON.stringify(newVal));
-  },
-  { deep: true }
-);
 const removeItem = (item) => {
   items.value = items.value.filter((t) => t !== item);
 };

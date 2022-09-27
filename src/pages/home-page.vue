@@ -10,9 +10,6 @@
   <cardList />
 </template>
 
-<script>
+<script setup>
 import cardList from "../components/card-list.vue";
-export default {
-  components: { cardList },
-};
 </script>
