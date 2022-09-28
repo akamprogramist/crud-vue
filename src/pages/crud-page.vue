@@ -1,38 +1,28 @@
 <script setup>
-import { ref, watch } from "vue";
-const items = ref([]);
-const name = ref("");
-const description = ref("");
-const tags = ref(null);
-watch(
-  items,
-  (newVal) => {
-    localStorage.setItem("items", JSON.stringify(newVal));
-  },
-  { deep: true }
-);
-const addTodo = () => {
-  items.value.push({
-    name: name.value,
-    description: description.value,
-    tags: tags.value,
-  });
+import { ItemsStore } from "../store/items";
+import { ref } from "vue";
+const ItemStore = ItemsStore();
 
-  name.value = "";
-  description.value = "";
-  tags.value = null;
+const itemsInput = ref({
+  title: "",
+  description: "",
+  tags: null,
+});
+const CreateItem = () => {
+  ItemStore.addTodo(itemsInput.value);
+  itemsInput.value = { title: "", description: "", tags: null };
 };
 </script>
 <template>
-  <form id="new-todo-form" @submit.prevent="addTodo">
+  <form id="new-todo-form" @submit.prevent="CreateItem">
     <div>
       <label for="name">name</label>
-      <input v-model="name" id="name" type="text" name="name" />
+      <input v-model="itemsInput.title" id="name" type="text" name="name" />
     </div>
     <div>
       <label for="description">description</label>
       <input
-        v-model="description"
+        v-model="itemsInput.description"
         type="text"
         name="description"
         id="description"
@@ -40,7 +30,7 @@ const addTodo = () => {
     </div>
     <div>
       <label for="tags">tags</label>
-      <input v-model="tags" type="text" name="tags" id="tags" />
+      <input v-model="itemsInput.tags" type="text" name="tags" id="tags" />
     </div>
     <input type="submit" value="Add Todo" />
   </form>
