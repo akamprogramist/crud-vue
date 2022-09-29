@@ -1,30 +1,25 @@
 <script setup>
-import { ref, onMounted, } from "vue";
-const items = ref([]);
+import { ref } from "vue";
+import { ItemsStore } from "../store/items";
+const ItemStore = ItemsStore();
 const changeItem = ref(false);
 const removeItem = (item) => {
-  items.value = items.value.filter((t) => t !== item);
+  ItemStore.delete(item);
 };
 const updateItem = (item) => {
-  items,
-    (newVal) => {
-      localStorage.setItem("items", JSON.stringify(newVal));
-    };
+  ItemStore.update(item);
 };
-onMounted(() => {
-  items.value = JSON.parse(localStorage.getItem("items")) || [];
-});
 </script>
 
 <template>
-  <div v-for="(item, index) in items" :key="index" class="items">
+  <div v-for="item in ItemStore.items" class="items">
     <div v-if="!changeItem">
-      <h1>{{ item.name }}</h1>
+      <h1>{{ item.title }}</h1>
       <p>{{ item.description }}</p>
       <p>#{{ item.tags }}</p>
     </div>
     <div v-else>
-      <input v-model="item.name" id="name" type="text" name="name" />
+      <input v-model="item.title" id="name" type="text" name="name" />
       <input
         v-model="item.description"
         id="description"

@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { useStorage } from "@vueuse/core";
+
 export const ItemsStore = defineStore("Items", {
   state: () => {
     return {
@@ -12,8 +13,13 @@ export const ItemsStore = defineStore("Items", {
         ...item,
       });
     },
-  },
-  removeItem(item) {
-    this.item = this.item.filter((t) => t !== item);
+    delete(item) {
+      this.items = this.items.filter((t) => t !== item);
+    },
+    update(item) {
+      this.item = () => {
+        useStorage("items",  item );
+      };
+    },
   },
 });
