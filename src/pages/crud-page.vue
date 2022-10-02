@@ -2,15 +2,15 @@
 import { ItemsStore } from "../store/items";
 import { ref } from "vue";
 const ItemStore = ItemsStore();
-
 const itemsInput = ref({
   title: "",
   description: "",
-  tags: null,
+  picked: null,
 });
+
 const CreateItem = () => {
   ItemStore.addTodo(itemsInput.value);
-  itemsInput.value = { title: "", description: "", tags: null };
+  itemsInput.value = { title: "", description: "", picked: null };
 };
 </script>
 <template>
@@ -29,8 +29,28 @@ const CreateItem = () => {
       />
     </div>
     <div>
-      <label for="tags">tags</label>
-      <input v-model="itemsInput.tags" type="text" name="tags" id="tags" />
+      <input
+        type="radio"
+        id="programming"
+        value="programming"
+        v-model="itemsInput.picked"
+      />
+      <label for="programming">programming</label>
+
+      <input
+        type="radio"
+        id="design"
+        value="design"
+        v-model="itemsInput.picked"
+      />
+      <label for="design">design</label>
+      <input
+        type="radio"
+        id="gaming"
+        value="gaming"
+        v-model="itemsInput.picked"
+      />
+      <label for="gaming">gaming</label>
     </div>
     <input type="submit" value="Add Todo" />
   </form>

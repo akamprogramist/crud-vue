@@ -5,6 +5,7 @@ export const ItemsStore = defineStore("Items", {
   state: () => {
     return {
       items: useStorage("items", []),
+      selectedCategory: "All",
     };
   },
   actions: {
@@ -18,8 +19,22 @@ export const ItemsStore = defineStore("Items", {
     },
     update(item) {
       this.item = () => {
-        useStorage("items",  item );
+        useStorage("items", item);
       };
+    },
+  },
+
+  getters: {
+    filteredItems() {
+      var picked = this.selectedCategory;
+
+      if (picked === "All") {
+        return this.items;
+      } else {
+        return this.items.filter((item) => {
+          return item.picked === picked;
+        });
+      }
     },
   },
 });
