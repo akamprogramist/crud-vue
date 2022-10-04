@@ -1,9 +1,15 @@
 <template>
   <div class="links">
-    <input type="search" name="search" id="search" placeholder="search" />
+    <input
+      type="search"
+      name="search"
+      id="search"
+      v-model="ItemStore.searchValue"
+      placeholder="search"
+    />
   </div>
 
-<div id="items">
+  <div id="items">
     <label
       ><input type="radio" v-model="ItemStore.selectedCategory" value="All" />
       All</label

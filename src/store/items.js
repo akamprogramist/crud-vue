@@ -5,6 +5,7 @@ export const ItemsStore = defineStore("Items", {
   state: () => {
     return {
       items: useStorage("items", []),
+      searchValue: "",
       selectedCategory: "All",
     };
   },
@@ -25,14 +26,22 @@ export const ItemsStore = defineStore("Items", {
   },
 
   getters: {
+    searchItems() {
+      if (this.searchValue.trim().length > 0) {
+        return this.items.filter((item) =>
+          item.title
+            .toLowerCase()
+            .includes(this.searchValue.trim().toLowerCase())
+        );
+      }
+      return this.items;
+    },
     filteredItems() {
-      var picked = this.selectedCategory;
-
-      if (picked === "All") {
+      if (this.selectedCategory === "All") {
         return this.items;
       } else {
         return this.items.filter((item) => {
-          return item.picked === picked;
+          return item.picked === this.selectedCategory;
         });
       }
     },

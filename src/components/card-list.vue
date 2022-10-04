@@ -12,7 +12,7 @@ const updateItem = (item) => {
 </script>
 
 <template>
-  <div v-for="item in ItemStore.filteredItems" class="items">
+  <div v-for="item in ItemStore.searchItems" class="items">
     <div v-if="!changeItem">
       <h1>{{ item.title }}</h1>
       <p>{{ item.description }}</p>
