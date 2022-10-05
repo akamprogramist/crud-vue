@@ -2,13 +2,11 @@ import { defineStore } from "pinia";
 import { useStorage } from "@vueuse/core";
 
 export const ItemsStore = defineStore("Items", {
-  state: () => {
-    return {
-      items: useStorage("items", []),
-      searchValue: "",
-      selectedCategory: "All",
-    };
-  },
+  state: () => ({
+    items: useStorage("items", []),
+    searchValue: "",
+    selectedCategory: "All",
+  }),
   actions: {
     addTodo(item) {
       this.items.push({
@@ -26,6 +24,14 @@ export const ItemsStore = defineStore("Items", {
   },
 
   getters: {
+    filteredItems() {
+      if (this.selectedCategory !== "All") {
+        return this.items.filter((item) => {
+          return item.picked === this.selectedCategory;
+        });
+      }
+      return this.items;
+    },
     searchItems() {
       if (this.searchValue.trim().length > 0) {
         return this.items.filter((item) =>
@@ -34,16 +40,7 @@ export const ItemsStore = defineStore("Items", {
             .includes(this.searchValue.trim().toLowerCase())
         );
       }
-      return this.items;
-    },
-    filteredItems() {
-      if (this.selectedCategory === "All") {
-        return this.items;
-      } else {
-        return this.items.filter((item) => {
-          return item.picked === this.selectedCategory;
-        });
-      }
+      return this.items && this.filteredItems;
     },
   },
 });
